@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nomen — name screenshots the moment you take them</title>
+<meta name="description" content="A quiet macOS menu bar utility that prompts you to name and tag every screenshot the moment you take it. End the chaos of Screenshot 2026-04-22 at 3.47.12 PM.png." />
+
+<!-- Open Graph / social -->
+<meta property="og:title" content="Nomen — name screenshots the moment you take them" />
+<meta property="og:description" content="A quiet macOS menu bar utility that prompts you to name and tag every screenshot the moment you take it." />
+<meta property="og:image" content="og-image.png" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="icon.png" type="image/png" />
+<link rel="apple-touch-icon" href="icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --paper:       oklch(98% 0.005 95);
+    --paper-2:     oklch(94% 0.008 90);
+    --ink:         oklch(18% 0.005 270);
+    --ink-2:       oklch(38% 0.005 270);
+    --ink-3:       oklch(60% 0.005 270);
+    --rule:        oklch(86% 0.008 90);
+    --spruce:      oklch(48% 0.10 150);
+    --spruce-deep: oklch(40% 0.10 150);
+    --sans:        "Geist", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+    --mono:        "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; }
+  a:hover { text-decoration: underline; }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* Top rule with brand mark */
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+  .topbar .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topbar .mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+  }
+  .topbar a {
+    color: var(--ink-3);
+    text-decoration: none;
+  }
+  .topbar a + a { margin-left: 18px; }
+  .topbar a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 60px;
+  }
+  .hero h1 {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: clamp(64px, 14vw, 160px);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin: 0 0 18px;
+    position: relative;
+    display: inline-block;
+  }
+  .hero h1 .underline {
+    display: block;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--spruce);
+    width: 60%;
+    margin-top: 12px;
+  }
+  .hero .lede {
+    font-size: clamp(20px, 2.4vw, 26px);
+    color: var(--ink-2);
+    max-width: 640px;
+    margin: 0 0 14px;
+    line-height: 1.35;
+  }
+  .hero .meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+  }
+  .hero .meta dt { color: var(--ink-3); margin-right: 8px; display: inline; }
+  .hero .meta dd { color: var(--ink); margin: 0; display: inline; }
+
+  /* Download block */
+  .download {
+    margin-top: 48px;
+    padding: 28px;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    background: var(--paper-2);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .download-info h3 { margin: 0 0 4px; font-size: 18px; font-weight: 600; }
+  .download-info p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .download-info .req {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 28px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 16px;
+    border: 0;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .btn:hover {
+    background: var(--spruce-deep);
+    text-decoration: none;
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* Section heading */
+  .sec {
+    border-top: 1px solid var(--rule);
+    padding: 72px 0;
+  }
+  .sec-num {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .sec h2 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    line-height: 1.15;
+  }
+  .sec p {
+    font-size: 17px;
+    color: var(--ink-2);
+    max-width: 640px;
+    margin: 0 0 12px;
+  }
+
+  /* Problem block — filename strikethrough */
+  .filename {
+    font-family: var(--mono);
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 18px 0;
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .filename .strike { text-decoration: line-through; }
+  .filename .replaced { color: var(--spruce-deep); margin-left: 16px; }
+
+  /* Steps */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 36px;
+  }
+  .step {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 24px;
+    background: var(--paper);
+  }
+  .step .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--spruce-deep);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .step h3 { margin: 0 0 6px; font-size: 16px; font-weight: 600; }
+  .step p { font-size: 14px; color: var(--ink-2); margin: 0; }
+  @media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+
+  /* Features list */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px 48px;
+    margin-top: 28px;
+  }
+  .feature h4 {
+    font-size: 15px;
+    margin: 0 0 4px;
+    font-weight: 600;
+  }
+  .feature p {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin: 0;
+  }
+  @media (max-width: 640px) { .features { grid-template-columns: 1fr; } }
+
+  /* Email signup */
+  .signup {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 14px;
+    padding: 40px;
+    margin-top: 36px;
+    border: 1px solid var(--ink);
+  }
+  .signup h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .signup p {
+    margin: 0 0 22px;
+    color: oklch(85% 0.008 90);
+    font-size: 15px;
+    max-width: 540px;
+  }
+  .signup form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .signup input[type="email"] {
+    flex: 1;
+    min-width: 240px;
+    padding: 14px 16px;
+    font-size: 15px;
+    background: oklch(28% 0.005 270);
+    border: 1px solid oklch(36% 0.005 270);
+    color: var(--paper);
+    border-radius: 10px;
+    font-family: inherit;
+    outline: none;
+  }
+  .signup input[type="email"]:focus {
+    border-color: var(--spruce);
+  }
+  .signup button {
+    padding: 14px 22px;
+    background: var(--spruce);
+    color: var(--paper);
+    border: 0;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .signup button:hover { background: var(--spruce-deep); }
+  .signup .privacy {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: oklch(70% 0.005 270);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+  .signup .ok {
+    color: var(--spruce);
+    font-weight: 500;
+    margin-top: 12px;
+    display: none;
+  }
+  .signup.success .ok { display: block; }
+  .signup.success form { display: none; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 36px 0 60px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer a { color: var(--ink-3); text-decoration: none; }
+  footer a:hover { color: var(--ink); }
+
+  /* Capture-bracket SVG mark */
+  .mark-svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="container">
+    <span class="mark">
+      <svg class="mark-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 9 V4 H9" />
+        <path d="M15 4 H20 V9" />
+        <path d="M4 15 V20 H9" />
+        <path d="M15 20 H20 V15" />
+        <circle cx="12" cy="12" r="1.7" fill="currentColor" stroke="none" />
+      </svg>
+      Nomen
+    </span>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/aviral-mehrotra/nomen" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <h1>nomen<span class="underline"></span></h1>
+      <p class="lede">A quiet macOS menu bar utility that prompts you to name and tag every screenshot the moment you take it.</p>
+      <p class="lede" style="font-size: 17px; color: var(--ink-3);">No more <code style="font-family: var(--mono); font-size: 0.95em;">Screenshot 2026-04-22 at 3.47.12 PM.png</code>. One keystroke and it's something you can actually find later.</p>
+
+      <dl class="meta">
+        <span><dt>Platform</dt> <dd>macOS 14+</dd></span>
+        <span><dt>Architecture</dt> <dd>Universal (Apple Silicon · Intel)</dd></span>
+        <span><dt>License</dt> <dd>Free</dd></span>
+        <span><dt>Version</dt> <dd>0.1.0</dd></span>
+      </dl>
+
+      <div class="download" id="download">
+        <div class="download-info">
+          <h3>Download Nomen 0.1.0</h3>
+          <p>Signed with Developer ID and notarized by Apple — no Gatekeeper warning.</p>
+          <div class="req">macOS 14 Sonoma or later · 673 KB · DMG</div>
+        </div>
+        <a class="btn" href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.1.0/Nomen-0.1.0.dmg">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 2v9" /><path d="M4 7l4 4 4-4" /><path d="M2 14h12" />
+          </svg>
+          Download .dmg
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="problem">
+    <div class="container">
+      <div class="sec-num">01 / The problem</div>
+      <h2>Every screenshot you've ever taken is named after a timestamp.</h2>
+      <p>Hundreds, maybe thousands of files in your Desktop or Downloads folder, each one indistinguishable from the next. Search is useless. You either rename each one by hand (tedious), don't bother (most common), or build elaborate Hazel rules (only power users).</p>
+
+      <div class="filename">
+        <span class="strike">Screenshot 2026-04-22 at 3.47.12 PM.png</span>
+        <span class="replaced">→ login-flow-step-3.png</span>
+      </div>
+
+      <p>Nomen renames it before you close the prompt. Friction is in the right place — naming happens once, immediately, while context is still fresh.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="how">
+    <div class="container">
+      <div class="sec-num">02 / How it works</div>
+      <h2>Cmd+Shift+4. Type a name. Done.</h2>
+      <p>Zero behavior change at capture time. You still take screenshots the way you always have.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="num">01 · Capture</div>
+          <h3>Take a screenshot</h3>
+          <p>Use Cmd+Shift+3, 4, or 5 — whatever you already use. The file saves as it always does.</p>
+        </div>
+        <div class="step">
+          <div class="num">02 · Name</div>
+          <h3>A small floating panel appears</h3>
+          <p>Type a meaningful name, optionally add tags, hit Enter. Esc skips and keeps the original name.</p>
+        </div>
+        <div class="step">
+          <div class="num">03 · Find</div>
+          <h3>The file is renamed in place</h3>
+          <p>Tags become Finder tags — searchable by Spotlight forever. Nothing leaves your Mac.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="why">
+    <div class="container">
+      <div class="sec-num">03 / Why Nomen</div>
+      <h2>Quiet, fast, forgettable.</h2>
+      <p>A tool you stop noticing because it just works. Built native to macOS — feels like part of the system, not an app pretending to be one.</p>
+
+      <div class="features">
+        <div class="feature">
+          <h4>All processing local</h4>
+          <p>No screenshots ever leave your device. No analytics, no telemetry, no network calls. Your files, your privacy.</p>
+        </div>
+        <div class="feature">
+          <h4>Doesn't steal focus</h4>
+          <p>Keep typing in your current app. The prompt floats above without interrupting what you were doing.</p>
+        </div>
+        <div class="feature">
+          <h4>Skip when you want</h4>
+          <p>Press Esc and the file keeps its original name. Nomen never blocks your workflow.</p>
+        </div>
+        <div class="feature">
+          <h4>Finder tags built in</h4>
+          <p>Tag a screenshot once and find it forever via Spotlight, the Finder sidebar, or smart folders.</p>
+        </div>
+        <div class="feature">
+          <h4>Multi-screenshot queue</h4>
+          <p>Take a flurry of screenshots; Nomen prompts you for each one in order. No lost captures.</p>
+        </div>
+        <div class="feature">
+          <h4>Sandboxed, signed, notarized</h4>
+          <p>Apple-verified Developer ID. Hardened runtime. Tight macOS sandbox. Compliant with App Store rules even though it's distributed direct.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="signup">
+    <div class="container">
+      <div class="sec-num">04 / Stay updated</div>
+      <h2>Get notified about new releases.</h2>
+      <p>Drop your email and we'll send you a short note when a new version ships. No spam, no newsletter — just release pings. Unsubscribe any time.</p>
+
+      <!-- Replace the action URL with your Formspree endpoint after signing up at formspree.io -->
+      <div class="signup" id="signup-form">
+        <h3>Be the first to hear about updates</h3>
+        <p>Drop your email below and we'll let you know when the next version of Nomen is out.</p>
+        <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="email-form">
+          <input type="email" name="email" placeholder="you@example.com" required aria-label="Your email address" />
+          <input type="hidden" name="_subject" value="New Nomen interest signup" />
+          <button type="submit">Notify me</button>
+        </form>
+        <p class="ok">✓ Thanks — you're on the list.</p>
+        <div class="privacy">Your email is used only for release pings · Never shared</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div>Nomen v0.1.0 · Built in Spring 2026</div>
+    <div>
+      <a href="https://github.com/aviral-mehrotra/nomen">Source</a> &nbsp;·&nbsp;
+      <a href="https://github.com/aviral-mehrotra/nomen/releases">Releases</a> &nbsp;·&nbsp;
+      <a href="https://github.com/aviral-mehrotra/nomen/issues">Report a bug</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Intercept the Formspree submission so we can show a success state inline
+  // instead of a full-page redirect.
+  const form = document.getElementById('email-form');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('signup-form').classList.add('success');
+        } else {
+          form.submit();  // fall back to native submit on error
+        }
+      } catch {
+        form.submit();
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
