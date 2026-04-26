@@ -1,0 +1,20 @@
+# Xcode build output
+build/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+
+# XcodeGen — project file is regenerated, not checked in
+*.xcodeproj
+*.xcworkspace
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Package.resolved
+
+# macOS
+.DS_Store
+
+# Environment / secrets
+.env

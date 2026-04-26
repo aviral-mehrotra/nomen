@@ -1,0 +1,60 @@
+name: Nomen
+options:
+  bundleIdPrefix: com.aviralmehrotra
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: "-"
+    SWIFT_STRICT_CONCURRENCY: minimal
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    ENABLE_HARDENED_RUNTIME: YES
+  configs:
+    Release:
+      SWIFT_OPTIMIZATION_LEVEL: "-O"
+      SWIFT_COMPILATION_MODE: wholemodule
+      GCC_OPTIMIZATION_LEVEL: "s"
+      ENABLE_NS_ASSERTIONS: NO
+      DEBUG_INFORMATION_FORMAT: "dwarf-with-dsym"
+
+targets:
+  Nomen:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Nomen
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aviralmehrotra.Nomen
+        PRODUCT_NAME: Nomen
+        CODE_SIGN_ENTITLEMENTS: Nomen/Nomen.entitlements
+        INFOPLIST_FILE: Nomen/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+
+  NomenTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: NomenTests
+    dependencies:
+      - target: Nomen
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aviralmehrotra.NomenTests
+        GENERATE_INFOPLIST_FILE: YES
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Nomen.app/Contents/MacOS/Nomen"
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
