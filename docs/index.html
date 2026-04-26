@@ -28,8 +28,9 @@
     --ink-2:       oklch(38% 0.005 270);
     --ink-3:       oklch(60% 0.005 270);
     --rule:        oklch(86% 0.008 90);
-    --spruce:      oklch(48% 0.10 150);
-    --spruce-deep: oklch(40% 0.10 150);
+    --spruce:      #0f240b;
+    --spruce-deep: #0f240b;
+    --spruce-hover:#1c3a16;
     --sans:        "Geist", -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
     --mono:        "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
@@ -305,7 +306,7 @@
     cursor: pointer;
     font-family: inherit;
   }
-  .signup button:hover { background: var(--spruce-deep); }
+  .signup button:hover { background: var(--spruce-hover); }
   .signup .privacy {
     font-family: var(--mono);
     font-size: 11px;
@@ -386,7 +387,7 @@
     cursor: pointer;
     font-family: inherit;
   }
-  .modal button:hover { background: var(--spruce-deep); }
+  .modal button:hover { background: var(--spruce-hover); }
   .modal .privacy {
     font-family: var(--mono);
     font-size: 11px;
@@ -477,7 +478,7 @@
 
   <section class="hero">
     <div class="container">
-      <h1>Name it.<br/>Don't <em>&ldquo;Screenshot 2026.&rdquo;</em></h1>
+      <h1>Name it. Don't<br/><em>&ldquo;Screenshot 2026.&rdquo;</em></h1>
       <p class="lede">A quiet macOS menu bar utility that prompts you to name and tag every screenshot the moment you&nbsp;take&nbsp;it.</p>
       <p class="lede" style="font-size: 17px; color: var(--ink-3);">No more <code style="font-family: var(--mono); font-size: 0.95em;">Screenshot 2026-04-22 at 3.47.12 PM.png</code>. One keystroke and it's something you can actually&nbsp;find&nbsp;later.</p>
 
