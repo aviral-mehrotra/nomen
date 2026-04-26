@@ -87,22 +87,17 @@
     padding: 80px 0 60px;
   }
   .hero h1 {
-    font-family: var(--mono);
+    font-family: var(--sans);
     font-weight: 500;
-    font-size: clamp(64px, 14vw, 160px);
-    letter-spacing: -0.04em;
-    line-height: 0.95;
-    margin: 0 0 18px;
-    position: relative;
-    display: inline-block;
+    font-size: clamp(48px, 9vw, 104px);
+    letter-spacing: -0.03em;
+    line-height: 1.0;
+    margin: 0 0 24px;
   }
-  .hero h1 .underline {
-    display: block;
-    height: 6px;
-    border-radius: 3px;
-    background: var(--spruce);
-    width: 60%;
-    margin-top: 12px;
+  .hero h1 em {
+    font-style: italic;
+    color: var(--spruce-deep);
+    font-weight: 500;
   }
   .hero .lede {
     font-size: clamp(20px, 2.4vw, 26px);
@@ -110,6 +105,7 @@
     max-width: 640px;
     margin: 0 0 14px;
     line-height: 1.35;
+    text-wrap: pretty;
   }
   .hero .meta {
     font-family: var(--mono);
@@ -259,12 +255,12 @@
 
   /* Email signup */
   .signup {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--paper-2);
+    color: var(--ink);
     border-radius: 14px;
-    padding: 40px;
+    padding: 36px;
     margin-top: 36px;
-    border: 1px solid var(--ink);
+    border: 1px solid var(--rule);
   }
   .signup h3 {
     margin: 0 0 8px;
@@ -272,9 +268,9 @@
     font-weight: 500;
     letter-spacing: -0.01em;
   }
-  .signup p {
+  .signup > p {
     margin: 0 0 22px;
-    color: oklch(85% 0.008 90);
+    color: var(--ink-2);
     font-size: 15px;
     max-width: 540px;
   }
@@ -288,9 +284,9 @@
     min-width: 240px;
     padding: 14px 16px;
     font-size: 15px;
-    background: oklch(28% 0.005 270);
-    border: 1px solid oklch(36% 0.005 270);
-    color: var(--paper);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    color: var(--ink);
     border-radius: 10px;
     font-family: inherit;
     outline: none;
@@ -313,19 +309,120 @@
   .signup .privacy {
     font-family: var(--mono);
     font-size: 11px;
-    color: oklch(70% 0.005 270);
+    color: var(--ink-3);
     letter-spacing: 0.04em;
     text-transform: uppercase;
     margin-top: 14px;
   }
   .signup .ok {
-    color: var(--spruce);
+    color: var(--spruce-deep);
     font-weight: 500;
     margin-top: 12px;
     display: none;
   }
   .signup.success .ok { display: block; }
   .signup.success form { display: none; }
+
+  /* Popup modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: oklch(0% 0 0 / 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+  .modal-overlay.open {
+    display: flex;
+    opacity: 1;
+  }
+  .modal {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  }
+  .modal h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .modal > p {
+    margin: 0 0 22px;
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.5;
+    text-wrap: pretty;
+  }
+  .modal form { display: flex; flex-direction: column; gap: 10px; }
+  .modal input[type="email"] {
+    padding: 14px 16px;
+    font-size: 15px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    border-radius: 10px;
+    font-family: inherit;
+    outline: none;
+  }
+  .modal input[type="email"]:focus { border-color: var(--spruce); }
+  .modal button {
+    padding: 14px 22px;
+    background: var(--spruce);
+    color: var(--paper);
+    border: 0;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 15px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .modal button:hover { background: var(--spruce-deep); }
+  .modal .privacy {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 14px;
+  }
+  .modal .close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: transparent;
+    border: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--ink-3);
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-family: inherit;
+  }
+  .modal .close:hover { background: var(--paper-2); color: var(--ink); }
+  .modal .ok {
+    color: var(--spruce-deep);
+    font-weight: 500;
+    margin-top: 12px;
+    display: none;
+  }
+  .modal.success .ok { display: block; }
+  .modal.success form { display: none; }
 
   /* Footer */
   footer {
@@ -371,8 +468,7 @@
     </span>
     <nav>
       <a href="#how">How it works</a>
-      <a href="#download">Download</a>
-      <a href="https://github.com/aviral-mehrotra/nomen" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.1.0/Nomen-0.1.0.dmg" download>Download</a>
     </nav>
   </div>
 </header>
@@ -381,14 +477,13 @@
 
   <section class="hero">
     <div class="container">
-      <h1>nomen<span class="underline"></span></h1>
-      <p class="lede">A quiet macOS menu bar utility that prompts you to name and tag every screenshot the moment you take it.</p>
-      <p class="lede" style="font-size: 17px; color: var(--ink-3);">No more <code style="font-family: var(--mono); font-size: 0.95em;">Screenshot 2026-04-22 at 3.47.12 PM.png</code>. One keystroke and it's something you can actually find later.</p>
+      <h1>Name it.<br/>Don't <em>&ldquo;Screenshot 2026.&rdquo;</em></h1>
+      <p class="lede">A quiet macOS menu bar utility that prompts you to name and tag every screenshot the moment you&nbsp;take&nbsp;it.</p>
+      <p class="lede" style="font-size: 17px; color: var(--ink-3);">No more <code style="font-family: var(--mono); font-size: 0.95em;">Screenshot 2026-04-22 at 3.47.12 PM.png</code>. One keystroke and it's something you can actually&nbsp;find&nbsp;later.</p>
 
       <dl class="meta">
         <span><dt>Platform</dt> <dd>macOS 14+</dd></span>
         <span><dt>Architecture</dt> <dd>Universal (Apple Silicon · Intel)</dd></span>
-        <span><dt>License</dt> <dd>Free</dd></span>
         <span><dt>Version</dt> <dd>0.1.0</dd></span>
       </dl>
 
@@ -511,18 +606,34 @@
   <div class="container">
     <div>Nomen v0.1.0 · Built in Spring 2026</div>
     <div>
-      <a href="https://github.com/aviral-mehrotra/nomen">Source</a> &nbsp;·&nbsp;
       <a href="https://github.com/aviral-mehrotra/nomen/releases">Releases</a> &nbsp;·&nbsp;
       <a href="https://github.com/aviral-mehrotra/nomen/issues">Report a bug</a>
     </div>
   </div>
 </footer>
 
+<!-- Email signup popup (shown once on first visit) -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal">
+    <button class="close" id="modal-close" aria-label="Close">&times;</button>
+    <h3 id="modal-title">Stay in the loop</h3>
+    <p>Get a short note when a new version of Nomen ships. No newsletter, no spam — just release pings.</p>
+    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" id="modal-form">
+      <input type="email" name="email" placeholder="you@example.com" required aria-label="Your email address" />
+      <input type="hidden" name="_subject" value="New Nomen interest signup (popup)" />
+      <button type="submit">Notify me</button>
+    </form>
+    <p class="ok">✓ Thanks — you're on the list.</p>
+    <div class="privacy">Used only for release pings · Never shared</div>
+  </div>
+</div>
+
 <script>
-  // Intercept the Formspree submission so we can show a success state inline
-  // instead of a full-page redirect.
-  const form = document.getElementById('email-form');
-  if (form) {
+  // Intercepts a Formspree submission, shows an inline success state instead
+  // of a full-page redirect.
+  function wireForm(formId, successContainer) {
+    const form = document.getElementById(formId);
+    if (!form) return;
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const data = new FormData(form);
@@ -533,15 +644,45 @@
           headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
-          document.getElementById('signup-form').classList.add('success');
+          document.getElementById(successContainer).classList.add('success');
+          try { localStorage.setItem('nomen-popup-seen', '1'); } catch {}
         } else {
-          form.submit();  // fall back to native submit on error
+          form.submit();
         }
       } catch {
         form.submit();
       }
     });
   }
+  wireForm('email-form', 'signup-form');
+  wireForm('modal-form', 'modal');
+
+  // Show the signup popup once per visitor (or whenever localStorage is cleared).
+  (function () {
+    const overlay = document.getElementById('modal-overlay');
+    const closeBtn = document.getElementById('modal-close');
+    if (!overlay || !closeBtn) return;
+
+    function dismiss() {
+      overlay.classList.remove('open');
+      try { localStorage.setItem('nomen-popup-seen', '1'); } catch {}
+    }
+
+    let seen = false;
+    try { seen = localStorage.getItem('nomen-popup-seen') === '1'; } catch {}
+    if (!seen) {
+      // Brief delay so the page paints first.
+      setTimeout(() => overlay.classList.add('open'), 700);
+    }
+
+    closeBtn.addEventListener('click', dismiss);
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) dismiss();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) dismiss();
+    });
+  })();
 </script>
 
 </body>
