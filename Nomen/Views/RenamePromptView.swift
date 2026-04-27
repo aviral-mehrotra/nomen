@@ -15,8 +15,8 @@ struct RenamePromptView: View {
 
             TextField("What is this?", text: $viewModel.name)
                 .textFieldStyle(.plain)
-                .font(.system(size: 18, weight: .regular))
-                .padding(.vertical, 6)
+                .font(.system(size: 14))
+                .padding(.vertical, 5)
                 .padding(.horizontal, 10)
                 .background(.background.secondary, in: RoundedRectangle(cornerRadius: 8))
                 .focused($focusedField, equals: .name)

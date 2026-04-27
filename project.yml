@@ -37,7 +37,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: Nomen/Nomen.entitlements
         INFOPLIST_FILE: Nomen/Info.plist
         GENERATE_INFOPLIST_FILE: NO
-        MARKETING_VERSION: "0.1.0"
+        MARKETING_VERSION: "0.2.0"
         CURRENT_PROJECT_VERSION: "1"
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon

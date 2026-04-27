@@ -35,49 +35,20 @@ func renderImage(size: CGFloat) -> NSImage {
         paper.setFill()
         rect.fill()
 
-        // Capture brackets.
+        // Capture brackets — large, centered, with margin from the squircle edge.
         drawBrackets(
             in: ctx,
-            center: CGPoint(x: s * 0.5, y: s * 0.62),
-            frameSize: s * 0.36,
-            lineWidth: s * 0.022
+            center: CGPoint(x: s * 0.5, y: s * 0.5),
+            frameSize: s * 1.05,
+            lineWidthInViewBoxUnits: 1.4
         )
-
-        // Wordmark.
-        let wordmarkFontSize = s * 0.16
-        let mono = NSFont.monospacedSystemFont(ofSize: wordmarkFontSize, weight: .medium)
-        let attrs: [NSAttributedString.Key: Any] = [
-            .font: mono,
-            .foregroundColor: ink,
-            .kern: -wordmarkFontSize * 0.04
-        ]
-        let wordmark = NSAttributedString(string: "nomen", attributes: attrs)
-        let textSize = wordmark.size()
-        let textOrigin = CGPoint(x: (s - textSize.width) / 2, y: s * 0.22)
-        wordmark.draw(at: textOrigin)
-
-        // Spruce green underline.
-        let underlineHeight = max(2, s * 0.014)
-        let underlineY = textOrigin.y - underlineHeight - s * 0.01
-        let underlineRect = CGRect(
-            x: textOrigin.x,
-            y: underlineY,
-            width: textSize.width,
-            height: underlineHeight
-        )
-        spruce.setFill()
-        NSBezierPath(
-            roundedRect: underlineRect,
-            xRadius: underlineHeight / 2,
-            yRadius: underlineHeight / 2
-        ).fill()
 
         ctx.restoreGState()
         return true
     }
 }
 
-func drawBrackets(in ctx: CGContext, center: CGPoint, frameSize: CGFloat, lineWidth: CGFloat) {
+func drawBrackets(in ctx: CGContext, center: CGPoint, frameSize: CGFloat, lineWidthInViewBoxUnits: CGFloat) {
     ctx.saveGState()
     let viewBox: CGFloat = 24
     let pixelsPerUnit = frameSize / viewBox
@@ -89,7 +60,7 @@ func drawBrackets(in ctx: CGContext, center: CGPoint, frameSize: CGFloat, lineWi
     ctx.setFillColor(ink.cgColor)
     ctx.setLineCap(.round)
     ctx.setLineJoin(.round)
-    ctx.setLineWidth(lineWidth / pixelsPerUnit)
+    ctx.setLineWidth(lineWidthInViewBoxUnits)
 
     let r: CGFloat = 1.2
     let path = CGMutablePath()
