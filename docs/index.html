@@ -20,6 +20,18 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+<!-- Analytics — Google Analytics 4. Tracks download-button clicks as `download_click`
+     events. Replace G-XXXXXXXXXX with your real GA4 Measurement ID once you've
+     created a property at analytics.google.com. Until then this snippet is
+     dormant (no requests fire). -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
 <style>
   :root {
     --paper:       oklch(98% 0.005 95);
@@ -341,7 +353,7 @@
     </span>
     <nav>
       <a href="#how">How it works</a>
-      <a href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.2.0/Nomen-0.2.0.dmg" download>Download</a>
+      <a href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.3.0/Nomen-0.3.0.dmg" download data-download-source="topbar">Download</a>
     </nav>
   </div>
 </header>
@@ -357,15 +369,15 @@
       <dl class="meta">
         <span><dt>Platform</dt> <dd>macOS 14+</dd></span>
         <span><dt>Architecture</dt> <dd>Universal (Apple Silicon · Intel)</dd></span>
-        <span><dt>Version</dt> <dd>0.2.0</dd></span>
+        <span><dt>Version</dt> <dd>0.3.0</dd></span>
       </dl>
 
       <div class="download" id="download">
         <div class="download-info">
-          <h3>Download Nomen 0.2.0</h3>
-          <div class="req">macOS 14 Sonoma or later · 666 KB · DMG</div>
+          <h3>Download Nomen 0.3.0</h3>
+          <div class="req">macOS 14 Sonoma or later · DMG</div>
         </div>
-        <a class="btn" href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.2.0/Nomen-0.2.0.dmg">
+        <a class="btn" href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.3.0/Nomen-0.3.0.dmg" download data-download-source="hero">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 2v9" /><path d="M4 7l4 4 4-4" /><path d="M2 14h12" />
           </svg>
@@ -470,7 +482,7 @@
 
 <footer>
   <div class="container">
-    <div>Nomen v0.2.0 · Built in Spring 2026</div>
+    <div>Nomen v0.3.0 · Built in Spring 2026</div>
     <div>
       <a href="https://github.com/aviral-mehrotra/nomen/releases">Releases</a> &nbsp;·&nbsp;
       <a href="https://github.com/aviral-mehrotra/nomen/issues">Report a bug</a>
@@ -493,6 +505,22 @@
   };
 </script>
 <script async src="https://tally.so/widgets/embed.js"></script>
+
+<script>
+  // Fire a GA4 `download_click` event whenever a download CTA is clicked.
+  // Each button carries a `data-download-source` attribute (topbar | hero) so
+  // the report can break clicks down by surface. No-ops cleanly when the GA
+  // measurement ID hasn't been wired up yet.
+  document.querySelectorAll('[data-download-source]').forEach((el) => {
+    el.addEventListener('click', () => {
+      if (typeof gtag !== 'function') return;
+      gtag('event', 'download_click', {
+        source: el.dataset.downloadSource,
+        version: '0.3.0'
+      });
+    });
+  });
+</script>
 
 </body>
 </html>

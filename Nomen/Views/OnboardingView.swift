@@ -124,7 +124,7 @@ struct OnboardingView: View {
     private var welcomeStep: some View {
         VStack(alignment: .leading, spacing: 18) {
             stepEyebrow("Welcome")
-            stepTitle("Glad Nomen is here.")
+            stepTitle("Set up Nomen.")
             stepBody("This will take about a minute. We'll grant Nomen permission to watch your screenshot folder, optionally tune one macOS setting for instant prompts, and get you ready to go.")
 
             calloutCard(icon: "internaldrive", title: "Is Nomen in your Applications folder?") {
@@ -137,15 +137,25 @@ struct OnboardingView: View {
         VStack(alignment: .leading, spacing: 18) {
             stepEyebrow("Step 1 of \(visibleSteps.count - 1)")
             stepTitle("Choose your screenshot folder.")
-            stepBody("macOS saves screenshots to a folder of your choosing — usually Desktop or Downloads. Tell Nomen which one to watch and grant access in the dialog that appears.")
+            stepBody("Nomen needs to watch the **same folder where macOS saves your screenshots** — otherwise it won't see them when they land.")
 
             if let detected = ScreencaptureDefaults.location {
-                detailRow(label: "Currently saving to", value: detected.path)
+                detailRow(label: "macOS is currently saving to", value: detected.path)
+            }
+
+            calloutCard(icon: "exclamationmark.circle", title: "Pick the folder shown above") {
+                Text("Your screenshot **save folder** and Nomen's **watch folder** must match. If you pick a different folder in the dialog, Nomen won't see your screenshots and the prompt won't appear.")
             }
 
             if let granted = folderURL {
                 successRow(text: "Granted: \(granted.path)")
             }
+
+            Text("If you change the screenshot save location later, open Nomen Settings and update the watch folder to match.")
+                .font(.system(size: 12))
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 4)
         }
     }
 
@@ -222,7 +232,7 @@ struct OnboardingView: View {
     private var primaryButtonTitle: String {
         switch step {
         case .welcome:
-            return "Get started"
+            return "Continue"
         case .folder:
             return folderURL == nil ? "Choose Folder…" : "Continue"
         case .optimize:
