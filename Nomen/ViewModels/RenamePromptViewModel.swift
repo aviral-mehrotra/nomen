@@ -11,6 +11,7 @@ final class RenamePromptViewModel {
     var tagsInput: String = ""
     var errorMessage: String?
     var didSave: Bool = false
+    var didCopy: Bool = false
 
     private let log = Logger(subsystem: "com.aviralmehrotra.Nomen", category: "PromptVM")
     private let renamer: FileRenamer
@@ -103,6 +104,28 @@ final class RenamePromptViewModel {
     func openInPreview() {
         log.notice("Open in Preview")
         NSWorkspace.shared.open(screenshot.url)
+    }
+
+    /// Copies the screenshot's bitmap onto the system pasteboard so the user
+    /// can paste it directly into Slack, Mail, a doc, etc. Also writes the
+    /// file URL so pasting in Finder or a file-aware app works too.
+    func copyToClipboard() {
+        let pb = NSPasteboard.general
+        pb.clearContents()
+        var wrote = false
+        if let image = NSImage(contentsOf: screenshot.url) {
+            wrote = pb.writeObjects([image])
+        }
+        // Always include the file URL as a secondary representation.
+        wrote = pb.writeObjects([screenshot.url as NSURL]) || wrote
+        log.notice("Copy to clipboard \(wrote ? "ok" : "failed", privacy: .public)")
+        if wrote {
+            didCopy = true
+            Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .milliseconds(1200))
+                self?.didCopy = false
+            }
+        }
     }
 
     func startAutoDismissTimer(seconds: TimeInterval? = nil) {

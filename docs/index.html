@@ -353,7 +353,7 @@
     </span>
     <nav>
       <a href="#how">How it works</a>
-      <a href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.3.0/Nomen-0.3.0.dmg" download data-download-source="topbar">Download</a>
+      <a href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.4.0/Nomen-0.4.0.dmg" download data-download-source="topbar">Download</a>
     </nav>
   </div>
 </header>
@@ -369,15 +369,15 @@
       <dl class="meta">
         <span><dt>Platform</dt> <dd>macOS 14+</dd></span>
         <span><dt>Architecture</dt> <dd>Universal (Apple Silicon · Intel)</dd></span>
-        <span><dt>Version</dt> <dd>0.3.0</dd></span>
+        <span><dt>Version</dt> <dd>0.4.0</dd></span>
       </dl>
 
       <div class="download" id="download">
         <div class="download-info">
-          <h3>Download Nomen 0.3.0</h3>
+          <h3>Download Nomen 0.4.0</h3>
           <div class="req">macOS 14 Sonoma or later · DMG</div>
         </div>
-        <a class="btn" href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.3.0/Nomen-0.3.0.dmg" download data-download-source="hero">
+        <a class="btn" href="https://github.com/aviral-mehrotra/nomen/releases/download/v0.4.0/Nomen-0.4.0.dmg" download data-download-source="hero">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M8 2v9" /><path d="M4 7l4 4 4-4" /><path d="M2 14h12" />
           </svg>
@@ -482,7 +482,7 @@
 
 <footer>
   <div class="container">
-    <div>Nomen v0.3.0 · Built in Spring 2026</div>
+    <div>Nomen v0.4.0 · Built in Spring 2026</div>
     <div>
       <a href="https://github.com/aviral-mehrotra/nomen/releases">Releases</a> &nbsp;·&nbsp;
       <a href="https://github.com/aviral-mehrotra/nomen/issues">Report a bug</a>
@@ -516,7 +516,11 @@
       if (typeof gtag !== 'function') return;
       gtag('event', 'download_click', {
         source: el.dataset.downloadSource,
-        version: '0.3.0'
+        version: '0.4.0',
+        // sendBeacon makes the request survive the page navigation that
+        // immediately follows a download-link click; without it the event
+        // can be cancelled mid-flight and never reach GA.
+        transport_type: 'beacon'
       });
     });
   });

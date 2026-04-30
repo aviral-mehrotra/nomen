@@ -40,9 +40,12 @@ struct RenamePromptView: View {
 
             HStack(spacing: 0) {
                 Spacer()
-                Text("↵ Save  ·  esc Skip  ·  ⌘O Open")
+                Text(viewModel.didCopy
+                     ? "✓ Copied to clipboard"
+                     : "↵ Save  ·  esc Skip  ·  ⌘O Open  ·  ⌘C Copy")
                     .font(.system(size: 11))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(viewModel.didCopy ? Color.green : .secondary)
+                    .animation(.easeInOut(duration: 0.18), value: viewModel.didCopy)
             }
         }
         .padding(20)
@@ -71,6 +74,10 @@ struct RenamePromptView: View {
         .background {
             Button("") { viewModel.openInPreview() }
                 .keyboardShortcut("o", modifiers: .command)
+                .opacity(0)
+                .frame(width: 0, height: 0)
+            Button("") { viewModel.copyToClipboard() }
+                .keyboardShortcut("c", modifiers: .command)
                 .opacity(0)
                 .frame(width: 0, height: 0)
         }
